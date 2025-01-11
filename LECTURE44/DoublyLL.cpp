@@ -205,5 +205,11 @@ int main()
 
     cout << "head " << head -> data << endl;
     cout << "tail " << tail -> data << endl;
+
+    deleteNode(8, head, tail);
+    print(head);
+    cout << "head " << head -> data << endl;
+    cout << "tail " << tail -> data << endl;
+
     return 0;
 }
