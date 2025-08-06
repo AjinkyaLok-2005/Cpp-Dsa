@@ -1,0 +1,56 @@
+#include<iostream>
+#include<map>
+#include<unordered_map>
+using namespace std;
+
+int main()
+{   
+    //creation
+    unordered_map<string, int> m;
+
+    //insertion
+    //type1
+    pair<string, int> p = make_pair("babbar", 3);
+    m.insert(p);
+
+    //type2
+    pair<string, int> pair2("love", 2);
+    m.insert(pair2);
+
+    //type3
+    m["mera"] = 1;
+    m["mera"] = 2;
+
+    //Search
+    cout << m["mera"] << endl;
+    cout << m.at("babbar") << endl;
+
+    //IMP - Understand the difference
+    // cout << m.at("UnknownKey") << endl;
+    
+    //This will create an entry corresponding to 0 in the map
+    cout << m["UnknownKey"] << endl;
+    cout << m.at("UnknownKey") << endl;
+    //after entry is created this will now give 0
+
+    //size
+    cout << m.size() << endl;
+
+    //to check presence
+    cout << m.count("love") << endl;
+    
+    //erase
+    m.erase("love");
+    cout << m.size() << endl; 
+
+    //iterator
+    unordered_map<string, int> :: iterator it = m.begin();
+
+    while(it != m.end())
+    {
+        cout << it -> first << " " << it -> second << endl;
+        it++;
+    }
+
+    return 0;
+} 
