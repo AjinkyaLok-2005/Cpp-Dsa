@@ -35,6 +35,28 @@ bool isCyclicBFS(int src, unordered_map<int, bool> &visited, unordered_map<int, 
     return false;
 }
 
+bool isCyclicDFS(int node, int parent, unordered_map<int, bool> &visited, unordered_map<int, list<int>> adj)
+{
+    visited[node] = true;
+    for(auto neighbour: adj[node])
+    {
+        if(!visited[neighbour])
+        {
+            bool cycleDetected = isCyclicDFS(neighbour, node, visited, adj);
+            if(cycleDetected)
+            {
+                return true;
+            }
+        }
+        else if(neighbour != parent)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 string cycleDetection (vector<vector<int>>& edges, int n, int m)
 {
     // Write your code here.
@@ -55,7 +77,7 @@ string cycleDetection (vector<vector<int>>& edges, int n, int m)
     {
         if(!visited[i])
         {
-            bool ans = isCyclicBFS(i, visited, adj);
+            bool ans = isCyclicDFS(i, -1, visited, adj);
             if(ans == 1)
             {
                 return "Yes";
@@ -78,5 +100,5 @@ int main()
     int n1 = 4, m1 = 4;
     
     string result1 = cycleDetection(edges1, n1, m1);
-    cout << "Test Case 1 - Graph with cycle: " << result1 << endl;
+    cout << "Graph with cycle: " << result1 << endl;
 }
