@@ -52,7 +52,7 @@ class Graph
         {
             int top = topo.top();
             topo.pop();
-            
+
             if(dist[top] != INT_MAX)
             {
                 for(auto i : adj[top])
