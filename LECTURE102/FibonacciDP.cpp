@@ -44,7 +44,7 @@ using namespace std;
 
 //TABULAR METHOD
 
-int main()
+// int main()
 // {   
 //     int n;
 //     cin >> n;
