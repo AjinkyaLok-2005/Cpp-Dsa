@@ -1,56 +1,99 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include <bits/stdc++.h> 
+#define MOD 1000000007
 using namespace std;
 
-#define MOD 1000000007
-
-// helper function for addition with modulo
-int add(int a, int b) {
-    return ( (a % MOD) + (b % MOD) ) % MOD;
+int add(int a, int b)
+{
+    return (a % MOD + b % MOD) % MOD;
 }
 
-// helper function for multiplication with modulo
-int mul(int a, int b) {
-    return ( (long long)(a % MOD) * (b % MOD) ) % MOD;
+int mul(int a, int b)
+{
+    return ((a % MOD) * 1LL * (b % MOD)) % MOD;
+}
+
+int solve(int n, int k)
+{
+    // base case
+    if (n == 1)
+        return k;
+
+    if (n == 2)
+        return add(k, mul(k, k - 1));
+
+    int ans = add(
+        mul(solve(n - 2, k), k - 1),
+        mul(solve(n - 1, k), k - 1)
+    );
+    return ans;
 }
 
 int solveMem(int n, int k, vector<int>& dp)
 {
-    // base cases
-    if(n == 1)
+    // base case
+    if (n == 1)
         return k;
-    
-    if(n == 2)
+
+    if (n == 2)
         return add(k, mul(k, k - 1));
 
-    // memoization check
-    if(dp[n] != -1)
+    if (dp[n] != -1)
         return dp[n];
 
-    // recurrence relation
     dp[n] = add(
-                mul(solveMem(n - 2, k, dp), k - 1),
-                mul(solveMem(n - 1, k, dp), k - 1)
-              );
-
+        mul(solveMem(n - 2, k, dp), k - 1),
+        mul(solveMem(n - 1, k, dp), k - 1)
+    );
     return dp[n];
+}
+
+int solveTab(int n, int k)
+{
+    vector<int> dp(n + 1, 0);
+
+    dp[1] = k;
+    dp[2] = add(k, mul(k, k - 1));
+
+    for (int i = 3; i <= n; i++)
+    {
+        dp[i] = add(
+            mul(dp[i - 2], k - 1),
+            mul(dp[i - 1], k - 1)
+        );
+    }
+    return dp[n];
+}
+
+int solveTabSO(int n, int k)
+{
+    int prev2 = k;
+    int prev1 = add(k, mul(k, k - 1));
+
+    for (int i = 3; i <= n; i++)
+    {
+        int ans = add(
+            mul(prev2, k - 1),
+            mul(prev1, k - 1)
+        );
+        prev2 = prev1;
+        prev1 = ans;
+    }
+    return prev1;
 }
 
 int numberOfWays(int n, int k)
 {
-    vector<int> dp(n + 1, -1);
-    return solveMem(n, k, dp);
+    return solveTabSO(n, k);
 }
 
 int main()
 {
     int n, k;
-    cout << "Enter number of posts (n): ";
-    cin >> n;
+    cin >> n >> k;
 
-    cout << "Enter number of colors (k): ";
-    cin >> k;
-
-    cout << "Number of ways: " << numberOfWays(n, k) << endl;
+    cout << numberOfWays(n, k) << endl;
 
     return 0;
 }
