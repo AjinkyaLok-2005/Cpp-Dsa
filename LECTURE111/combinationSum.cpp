@@ -52,7 +52,7 @@ int solveTab(vector<int> &num, int tar)
 
     for(int i = 1; i <= tar; i++)
     {
-        for(int j = 0; i < num.size(); j++)
+        for(int j = 0; j < num.size(); j++)
         {
             if(i-num[j] >= 0)
                 dp[i] += dp[i - num[j]];
