@@ -110,7 +110,7 @@ class Solution {
         // vector<vector<int>> dp(N, vector<int>(target+1, -1));
         // return solveMem(0, arr, target, dp);
         
-        return solveTab(N, arr, total);
+        return solveTabSO(N, arr, total);
     }
 };
 
